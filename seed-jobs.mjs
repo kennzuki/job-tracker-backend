@@ -43,3 +43,6 @@ await Job.insertMany(sampleJobs);
 console.log('Inserted sample users:', createdUsers.length);
 console.log('Inserted sample jobs:', sampleJobs.length);
 await mongoose.disconnect();
+
+
+//filtering,pagination,search
