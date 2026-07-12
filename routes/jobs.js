@@ -1,16 +1,22 @@
 import express from "express";
-import Job from "../models/Job.js";
+import Job from "../models/JobModel.js";
 
 const router = express.Router();
 
 // Create a job
 router.post("/", async (req, res) => {
   try {
-    const { title, company, status, location } = req.body;
+    const { title, company, status, location, user } = req.body;
     if (!title || !company) {
       return res.status(400).json({ message: "title and company are required" });
     }
-    const job = await Job.create({ title, company, status, location });
+
+    const jobData = { title, company, status, location };
+    if (user) {
+      jobData.user = user;
+    }
+
+    const job = await Job.create(jobData);
     res.status(201).json(job);
   } catch (err) {
     res.status(500).json({ message: "Server error", error: err.message });
